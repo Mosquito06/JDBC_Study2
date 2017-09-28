@@ -84,11 +84,24 @@ public class DepartmentFrame extends JFrame {
 					mainframe.setTable();
 					clearText();
 				} else if (e.getActionCommand().equals("추가")) {
-					
+					DepartmentDao.getInstance().insertDepartment(getModyDepartment());
+					mainframe.setTable();
+					clearText();
+				} else if (e.getActionCommand().equals("삭제")) {
+					int deptNo = Integer.parseInt(textDeptno.getText());
+					Department dept = new Department(deptNo);
+					DepartmentDao.getInstance().deleteDepartment(dept);
+					mainframe.setTable();
+					clearText();
+				} else if (e.getActionCommand().equals("검색")) {
+					int deptNo = Integer.parseInt(textDeptno.getText());
+					Department dept = new Department(deptNo);
+					Object[] dept2 = DepartmentDao.getInstance().selectDepartmentByNo(dept).toArray();
+					mainframe.setTable(dept2);
+					clearText();
+
 				}
-
 			}
-
 		});
 
 		btnCancel = new JButton("\uCDE8\uC18C");
@@ -106,16 +119,24 @@ public class DepartmentFrame extends JFrame {
 	public void setText(String text) {
 		if (text.equals("추가")) {
 			btnAdd.setText("추가");
+			clearText();
 			textDeptno.setEditable(false);
+			textName.setEditable(true);
+			textFloor.setEditable(true);
 		} else if (text.equals("수정")) {
+			clearText();
 			btnAdd.setText("수정");
 
 		} else if (text.equals("삭제")) {
 			btnAdd.setText("삭제");
+			clearText();
+			textDeptno.setEditable(true);
 			textName.setEditable(false);
 			textFloor.setEditable(false);
 		} else if (text.equals("검색")) {
 			btnAdd.setText("검색");
+			clearText();
+			textDeptno.setEditable(true);
 			textName.setEditable(false);
 			textFloor.setEditable(false);
 		}

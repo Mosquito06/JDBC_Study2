@@ -25,7 +25,7 @@ public class eDBCon {
 	public eDBCon() {
 		try {
 			con = DriverManager.getConnection(url, user, password);
-			JOptionPane.showMessageDialog(null, "연결이 완료되었습니다");
+			JOptionPane.showMessageDialog(null, "프로그램을 시작합니다.");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

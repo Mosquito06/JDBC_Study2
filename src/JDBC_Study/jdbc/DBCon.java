@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import javax.swing.JOptionPane;
+
 public class DBCon {
 	private String user = "root";
 	private String password = "rootroot";
@@ -27,7 +29,7 @@ public class DBCon {
 	private DBCon() {
 		try {
 			conn = DriverManager.getConnection(url, user, password);
-
+			JOptionPane.showMessageDialog(null, "프로그램을 시작합니다.");
 		} catch (SQLException e) {
 			System.err.printf("%s - %s%n", e.getErrorCode(), e.getMessage());
 			e.printStackTrace();

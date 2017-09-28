@@ -64,8 +64,11 @@ public class DepartmentDao {
 
 			rs = pstmt.executeQuery();
 
-			while (rs.next()) {
+			if(rs.next()){
 				department = new Department(rs.getInt("deptNO"), rs.getString("deptName"), rs.getInt("floor"));
+				JOptionPane.showMessageDialog(null, "검색을 완료하였습니다");
+			}else{
+				JOptionPane.showMessageDialog(null, "검색하신 부서는 존재하지 않습니다");
 			}
 
 		} catch (SQLException e) {
@@ -89,6 +92,8 @@ public class DepartmentDao {
 			if (res < 0) {
 				System.out.println("삽입 실패");
 				return;
+			}else{
+				JOptionPane.showMessageDialog(null, "부서를 추가하였습니다");
 			}
 
 		} catch (SQLException e) {

@@ -67,9 +67,12 @@ package JDBC_Study.dao;
 				pstmt.setInt(1, e.getEmpNo());
 				rs = pstmt.executeQuery();
 
-				while (rs.next()) {
+				if(rs.next()) {
 					employee = new Employee(rs.getInt("empno"), rs.getString("empname"), rs.getString("title"),
 							rs.getInt("manager"), rs.getInt("salary"), rs.getInt("dno"), rs.getString("leaveoffice"));
+					JOptionPane.showMessageDialog(null, "검색을 완료하였습니다");
+				}else{
+					JOptionPane.showMessageDialog(null, "검색하신 사원 존재하지 않습니다");
 				}
 
 			} catch (SQLException e1) {
