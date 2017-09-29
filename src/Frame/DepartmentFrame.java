@@ -126,7 +126,9 @@ public class DepartmentFrame extends JFrame {
 		} else if (text.equals("수정")) {
 			clearText();
 			btnAdd.setText("수정");
-
+			textDeptno.setEditable(false);
+			textName.setEditable(true);
+			textFloor.setEditable(true);
 		} else if (text.equals("삭제")) {
 			btnAdd.setText("삭제");
 			clearText();

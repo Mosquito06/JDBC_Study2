@@ -11,7 +11,7 @@ public class eDBCon {
 	
 	private String user = "root";
 	private String password = "rootroot";
-	private String url = "jdbc:mysql://localhost/mysql_study";
+	private String url = "jdbc:mysql://localhost/example";
 	private Connection con;
 
 	public static eDBCon getInstance() {

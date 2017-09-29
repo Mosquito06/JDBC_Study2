@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
@@ -57,6 +58,20 @@ public class MainFrame extends JFrame {
 
 		JMenuItem mntmExit = new JMenuItem("Exit");
 		mnFile.add(mntmExit);
+		mntmExit.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int Confirm = JOptionPane.showConfirmDialog(null, "정말로 종료하시겠습니까?", "종료 확인", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+				if(Confirm == JOptionPane.YES_OPTION){
+					setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+					setVisible(false);
+				}
+				
+			}
+		});
+		
+		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -125,7 +140,7 @@ public class MainFrame extends JFrame {
 							} else {
 								Employeeframe.setVisible(true);
 							}
-							Employeeframe.setText("수정", getNameCombo(Edao.selectEmployeeByAll()));
+							
 							
 						}
 						
@@ -158,7 +173,14 @@ public class MainFrame extends JFrame {
 					Departmentframe.setText("추가");
 					Departmentframe.getTextDeptno().setText(String.valueOf(i + 1));
 				} else {
-					// employee 작업 공간
+					if (Employeeframe == null) {
+						Employeeframe = new EmployeeFrame();
+
+						Employeeframe.setVisible(true);
+					} else {
+						Employeeframe.setVisible(true);
+					}
+					Employeeframe.setText("추가");
 				}
 
 			}
@@ -180,7 +202,14 @@ public class MainFrame extends JFrame {
 					}
 					Departmentframe.setText("삭제");
 				} else {
-					// employee 작업 공간
+					if (Employeeframe == null) {
+						Employeeframe = new EmployeeFrame();
+
+						Employeeframe.setVisible(true);
+					} else {
+						Employeeframe.setVisible(true);
+					}
+					Employeeframe.setText("삭제");
 				}
 			}
 		});
@@ -201,7 +230,14 @@ public class MainFrame extends JFrame {
 					}
 					Departmentframe.setText("검색");
 				} else {
-					// employee 작업 공간
+					if (Employeeframe == null) {
+						Employeeframe = new EmployeeFrame();
+
+						Employeeframe.setVisible(true);
+					} else {
+						Employeeframe.setVisible(true);
+					}
+					Employeeframe.setText("검색");
 				}
 
 			}

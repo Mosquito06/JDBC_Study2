@@ -13,6 +13,9 @@ import JDBC_Study.dto.Employee;
 
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
@@ -50,7 +53,8 @@ public class EmployeeFrame extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new GridLayout(0, 2, 0, 0));
-
+		setLocationRelativeTo(null);
+		
 		lblEmpno = new JLabel("\uC0AC\uC6D0\uBC88\uD638");
 		lblEmpno.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(lblEmpno);
@@ -101,21 +105,58 @@ public class EmployeeFrame extends JFrame {
 
 		btnCancel = new JButton("\uCDE8\uC18C");
 		contentPane.add(btnCancel);
-		setLocationRelativeTo(null);
+		btnCancel.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				
+			}
+		});
 	}
 
-	public void setText(String text, Object[][] objects) {
+	public void setText(String text) {
 		if (text.equals("추가")) {
 			btnAdd.setText("추가");
 			clearText();
-
+			textEmpno.setEditable(false);
+			textEmpname.setEditable(true);
+			textTitle.setEditable(true);
+			boxManager.setEnabled(true);
+			spinnerSalary.setEnabled(true);
+			boxDno.setEnabled(true);
+			textTitle.setEnabled(true);
 		} else if (text.equals("수정")) {
-			System.out.println("확인");
-
+			btnAdd.setText("수정");
+			clearText();
+			textEmpno.setEditable(false);
+			textEmpname.setEditable(true);
+			textTitle.setEditable(true);
+			boxManager.setEnabled(true);
+			spinnerSalary.setEnabled(true);
+			boxDno.setEnabled(true);
+			textTitle.setEnabled(true);
 		} else if (text.equals("삭제")) {
-
+			btnAdd.setText("삭제");
+			clearText();
+			textEmpno.setEditable(true);
+			textEmpname.setEditable(false);
+			textTitle.setEnabled(false);
+			boxManager.setEnabled(false);
+			spinnerSalary.setEnabled(false);
+			boxDno.setEnabled(false);
+			textTitle.setEditable(false);
 		} else if (text.equals("검색")) {
-
+			btnAdd.setText("검색");
+			clearText();
+			textEmpno.setEditable(true);
+			textEmpname.setEditable(false);
+			textTitle.setEditable(false);
+			boxManager.setEnabled(false);
+			spinnerSalary.setEnabled(false);
+			boxDno.setEnabled(false);
+			textTitle.setEditable(false);
+			
 		}
 
 	}
