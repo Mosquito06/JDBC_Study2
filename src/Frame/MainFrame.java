@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -27,7 +28,7 @@ import JDBC_Study.dto.Employee;
 
 public class MainFrame extends JFrame {
 	public static final Object[] DEPARTMENT_NAMES = { "부서번호", "부서명", "위치" };
-	public static final Object[] EMPLOYEE_NAMES = { "사원번호", "사원명", "관리자", "부서", "급여", "직책" };
+	public static final Object[] EMPLOYEE_NAMES = { "사원번호", "사원명", "관리자", "부서", "급여", "직책", "퇴근시간" };
 
 	private int i;
 	private JPanel contentPane;
@@ -140,6 +141,15 @@ public class MainFrame extends JFrame {
 							} else {
 								Employeeframe.setVisible(true);
 							}
+							
+							int empNo = (int) table.getValueAt(table.getSelectedRow(), 0);
+							String empName = (String) table.getValueAt(table.getSelectedRow(), 1);
+							String title = (String) table.getValueAt(table.getSelectedRow(), 2);
+							index 3 == 관리자(콤보박스)
+							int salary = (int) table.getValueAt(table.getSelectedRow(), 4);
+							index 5 == 부서(콤보박스)
+							
+							
 							
 							
 						}

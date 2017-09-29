@@ -54,7 +54,7 @@ public class EmployeeFrame extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new GridLayout(0, 2, 0, 0));
 		setLocationRelativeTo(null);
-		
+
 		lblEmpno = new JLabel("\uC0AC\uC6D0\uBC88\uD638");
 		lblEmpno.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(lblEmpno);
@@ -71,27 +71,6 @@ public class EmployeeFrame extends JFrame {
 		contentPane.add(textEmpname);
 		textEmpname.setColumns(10);
 
-		lblManager = new JLabel("\uAD00\uB9AC\uC790");
-		lblManager.setHorizontalAlignment(SwingConstants.CENTER);
-		contentPane.add(lblManager);
-
-		boxManager = new JComboBox();
-		contentPane.add(boxManager);
-
-		lblDno = new JLabel("\uBD80\uC11C");
-		lblDno.setHorizontalAlignment(SwingConstants.CENTER);
-		contentPane.add(lblDno);
-
-		boxDno = new JComboBox();
-		contentPane.add(boxDno);
-
-		lblSalary = new JLabel("\uAE09\uC5EC");
-		lblSalary.setHorizontalAlignment(SwingConstants.CENTER);
-		contentPane.add(lblSalary);
-
-		spinnerSalary = new JSpinner();
-		contentPane.add(spinnerSalary);
-
 		lblTitle = new JLabel("\uC9C1\uCC45");
 		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(lblTitle);
@@ -100,17 +79,38 @@ public class EmployeeFrame extends JFrame {
 		textTitle.setColumns(10);
 		contentPane.add(textTitle);
 
+		lblManager = new JLabel("\uAD00\uB9AC\uC790");
+		lblManager.setHorizontalAlignment(SwingConstants.CENTER);
+		contentPane.add(lblManager);
+
+		boxManager = new JComboBox();
+		contentPane.add(boxManager);
+
+		lblSalary = new JLabel("\uAE09\uC5EC");
+		lblSalary.setHorizontalAlignment(SwingConstants.CENTER);
+		contentPane.add(lblSalary);
+
+		spinnerSalary = new JSpinner();
+		contentPane.add(spinnerSalary);
+
+		lblDno = new JLabel("\uBD80\uC11C");
+		lblDno.setHorizontalAlignment(SwingConstants.CENTER);
+		contentPane.add(lblDno);
+
+		boxDno = new JComboBox();
+		contentPane.add(boxDno);
+
 		btnAdd = new JButton("\uCD94\uAC00");
 		contentPane.add(btnAdd);
 
 		btnCancel = new JButton("\uCDE8\uC18C");
 		contentPane.add(btnCancel);
 		btnCancel.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				
+
 			}
 		});
 	}
@@ -156,7 +156,7 @@ public class EmployeeFrame extends JFrame {
 			spinnerSalary.setEnabled(false);
 			boxDno.setEnabled(false);
 			textTitle.setEditable(false);
-			
+
 		}
 
 	}
