@@ -81,18 +81,12 @@ public class Employee {
 
 	@Override
 	public String toString() {
-		return String.format("사원번호: %s, 사원명 : %s, 직책 : %s, 상사 : %s, 월급 : %s, 부서번호: %s, 퇴근 시간: %s",
-				empNo, empName, title, manager, salary, dno, leaveOffice);
+		return String.format("사원번호: %s, 사원명 : %s, 직책 : %s, 상사 : %s, 월급 : %s, 부서번호: %s, 퇴근 시간: %s", empNo, empName,
+				title, manager, salary, dno, leaveOffice);
 	}
 
 	public Object[] toArray() {
-		return new Object[]{empNo, empName, title, manager, salary, dno, leaveOffice};
+		return new Object[] { empNo, empName, title, manager, salary, dno, leaveOffice };
 	}
 
-	public Object[] toArrayName() {
-		return new Object[]{empName};
-	}
-	
-	
-	
 }

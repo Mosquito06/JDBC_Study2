@@ -7,7 +7,10 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ChangeListener;
 
+import JDBC_Study.dao.DepartmentDao;
+import JDBC_Study.dao.EmployeeDao;
 import JDBC_Study.dto.Department;
 import JDBC_Study.dto.Employee;
 
@@ -18,9 +21,12 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.JComboBox;
 import javax.swing.JScrollBar;
 import javax.swing.JSpinner;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 
@@ -41,9 +47,20 @@ public class EmployeeFrame extends JFrame {
 	private JLabel lblEmpno;
 	private JComboBox boxManager;
 	private JComboBox boxDno;
+	private MainFrame mainframe;
+	private JLabel lblLeave;
+	private JTextField textLeave;
 
-	public void setBoxManager(JComboBox boxManager) {
-		this.boxManager = boxManager;
+	public void setMainframe(MainFrame mainframe) {
+		this.mainframe = mainframe;
+	}
+
+	public JComboBox getBoxManager() {
+		return boxManager;
+	}
+
+	public JComboBox getBoxDno() {
+		return boxDno;
 	}
 
 	public EmployeeFrame() {
@@ -100,6 +117,14 @@ public class EmployeeFrame extends JFrame {
 		boxDno = new JComboBox();
 		contentPane.add(boxDno);
 
+		lblLeave = new JLabel("\uD1F4\uADFC\uC2DC\uAC04");
+		lblLeave.setHorizontalAlignment(SwingConstants.CENTER);
+		contentPane.add(lblLeave);
+
+		textLeave = new JTextField();
+		textLeave.setColumns(10);
+		contentPane.add(textLeave);
+
 		btnAdd = new JButton("\uCD94\uAC00");
 		contentPane.add(btnAdd);
 
@@ -113,19 +138,49 @@ public class EmployeeFrame extends JFrame {
 
 			}
 		});
+		btnAdd.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (e.getActionCommand().equals("추가")) {
+					EmployeeDao.getInstance().insertEmployee(getModyEmployee());
+					mainframe.setTableE();
+					clearText();
+				} else if (e.getActionCommand().equals("수정")) {
+					EmployeeDao.getInstance().updateEmployee(getModyEmployee());
+					mainframe.setTableE();
+					clearText();
+				} else if (e.getActionCommand().equals("삭제")) {
+					int empNo = Integer.valueOf(textEmpno.getText());
+					EmployeeDao.getInstance().deleteEmployee(new Employee(empNo));
+					mainframe.setTableE();
+					clearText();
+				} else if (e.getActionCommand().equals("검색")) {
+					int empNo = Integer.valueOf(textEmpno.getText());
+					Employee emp = new Employee(empNo);
+					Object[] emp2 = EmployeeDao.getInstance().selectEmployeeByNo(emp).toArray();
+					mainframe.setTableE(emp2);
+					clearText();
+				}
+
+			}
+
+			
+		});
 	}
 
 	public void setText(String text) {
 		if (text.equals("추가")) {
 			btnAdd.setText("추가");
 			clearText();
-			textEmpno.setEditable(false);
+			textEmpno.setEditable(true);
 			textEmpname.setEditable(true);
 			textTitle.setEditable(true);
 			boxManager.setEnabled(true);
 			spinnerSalary.setEnabled(true);
 			boxDno.setEnabled(true);
 			textTitle.setEnabled(true);
+			textLeave.setEditable(true);
 		} else if (text.equals("수정")) {
 			btnAdd.setText("수정");
 			clearText();
@@ -136,6 +191,7 @@ public class EmployeeFrame extends JFrame {
 			spinnerSalary.setEnabled(true);
 			boxDno.setEnabled(true);
 			textTitle.setEnabled(true);
+			textLeave.setEditable(true);
 		} else if (text.equals("삭제")) {
 			btnAdd.setText("삭제");
 			clearText();
@@ -146,6 +202,7 @@ public class EmployeeFrame extends JFrame {
 			spinnerSalary.setEnabled(false);
 			boxDno.setEnabled(false);
 			textTitle.setEditable(false);
+			textLeave.setEditable(false);
 		} else if (text.equals("검색")) {
 			btnAdd.setText("검색");
 			clearText();
@@ -156,21 +213,56 @@ public class EmployeeFrame extends JFrame {
 			spinnerSalary.setEnabled(false);
 			boxDno.setEnabled(false);
 			textTitle.setEditable(false);
+			textLeave.setEditable(false);
 
 		}
 
 	}
 
+	private Employee getModyEmployee() {
+		int empNo = Integer.valueOf(textEmpno.getText());
+		String empName = textEmpname.getText();
+		String title = textTitle.getText();
+
+		String m1 = (String) boxManager.getSelectedItem();
+		int manager = Integer.valueOf(m1.substring(1, 5));
+
+		int salary = (int) spinnerSalary.getValue();
+
+		String m2 = (String) boxDno.getSelectedItem();
+		int dno = Integer.valueOf(m2.substring(1, 2));
+
+		String leaveOffice = textLeave.getText();
+
+		return new Employee(empNo, empName, title, manager, salary, dno, leaveOffice);
+	}
+	
+	
 	public void setModyText(Employee e) {
 		textEmpno.setText(String.valueOf(e.getEmpNo()));
 		textEmpname.setText(e.getEmpName());
-		// boxManager.s
+		textTitle.setText(e.getTitle());
+
+		boxManager.setModel(EmployeeDao.getInstance().getComboData("관리자", e));
+
+		SpinnerNumberModel spModel = new SpinnerNumberModel(e.getSalary(), 0, 100000000, 100000);
+		spinnerSalary.setModel(spModel);
+
+		boxDno.setModel(EmployeeDao.getInstance().getComboData("부서", e));
+
+		textLeave.setText(e.getLeaveOffice());
 	}
 
 	public void clearText() {
 		for (Component c : contentPane.getComponents()) {
 			if (c instanceof JTextField) {
 				((JTextField) c).setText("");
+			}
+			if (c instanceof JComboBox) {
+				((JComboBox) c).setModel(new DefaultComboBoxModel<>());
+			}
+			if (c instanceof JSpinner) {
+				((JSpinner) c).setModel(new SpinnerNumberModel());
 			}
 		}
 	}

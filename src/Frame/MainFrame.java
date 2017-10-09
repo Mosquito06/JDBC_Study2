@@ -45,6 +45,7 @@ public class MainFrame extends JFrame {
 
 	public MainFrame() {
 		Departmentframe.setMainframe(this);
+		Employeeframe.setMainframe(this);
 
 		setTitle("\uD1B5\uD569 \uAD00\uB9AC \uC2DC\uC2A4\uD15C");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -60,19 +61,19 @@ public class MainFrame extends JFrame {
 		JMenuItem mntmExit = new JMenuItem("Exit");
 		mnFile.add(mntmExit);
 		mntmExit.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int Confirm = JOptionPane.showConfirmDialog(null, "정말로 종료하시겠습니까?", "종료 확인", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-				if(Confirm == JOptionPane.YES_OPTION){
+				int Confirm = JOptionPane.showConfirmDialog(null, "정말로 종료하시겠습니까?", "종료 확인", JOptionPane.YES_NO_OPTION,
+						JOptionPane.QUESTION_MESSAGE);
+				if (Confirm == JOptionPane.YES_OPTION) {
 					setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 					setVisible(false);
 				}
-				
+
 			}
 		});
-		
-		
+
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -141,19 +142,19 @@ public class MainFrame extends JFrame {
 							} else {
 								Employeeframe.setVisible(true);
 							}
-							
+							Employeeframe.setText("수정");
+
 							int empNo = (int) table.getValueAt(table.getSelectedRow(), 0);
 							String empName = (String) table.getValueAt(table.getSelectedRow(), 1);
 							String title = (String) table.getValueAt(table.getSelectedRow(), 2);
-							index 3 == 관리자(콤보박스)
+							int manager = (int) table.getValueAt(table.getSelectedRow(), 3);
 							int salary = (int) table.getValueAt(table.getSelectedRow(), 4);
-							index 5 == 부서(콤보박스)
-							
-							
-							
-							
+							int dno = (int) table.getValueAt(table.getSelectedRow(), 5);
+							String leaveOffice = (String) table.getValueAt(table.getSelectedRow(), 6);
+							Employeeframe.setModyText(
+									new Employee(empNo, empName, title, manager, salary, dno, leaveOffice));
 						}
-						
+
 					});
 
 					popUp.add(menuItem);
@@ -191,6 +192,8 @@ public class MainFrame extends JFrame {
 						Employeeframe.setVisible(true);
 					}
 					Employeeframe.setText("추가");
+					Employeeframe.getBoxManager().setModel(EmployeeDao.getInstance().setComboData("관리자"));
+					Employeeframe.getBoxDno().setModel(EmployeeDao.getInstance().setComboData("부서"));
 				}
 
 			}
@@ -262,7 +265,7 @@ public class MainFrame extends JFrame {
 		panelDepartment = new JPanel();
 		tabbedPane.addTab("\uBD80\uC11C", null, panelDepartment, null);
 		panelDepartment.setLayout(new GridLayout(0, 1, 0, 0));
-		
+
 		JScrollPane scrollPane_1 = new JScrollPane();
 		panelDepartment.add(scrollPane_1);
 
@@ -280,24 +283,6 @@ public class MainFrame extends JFrame {
 			i++;
 		}
 		return data;
-	}
-
-	public Object[][] getdateE(List<Employee> lists) {
-		Object[][] data = new Object[lists.size()][];
-		i = 0;
-		for (Employee e : lists) {
-			data[i] = e.toArray();
-			i++;
-		}
-		return data;
-	}
-	
-	public void getNameCombo(List<Employee> lists) {
-		
-		for (Employee e : lists) {
-			
-		}
-		return ;
 	}
 
 	public void modyMethod(Department dept) {
@@ -330,6 +315,38 @@ public class MainFrame extends JFrame {
 		table = new JTable(model);
 		panelDepartment.add(table);
 		panelDepartment.revalidate();
+	}
+
+	public Object[][] getdateE(List<Employee> lists) {
+		Object[][] data = new Object[lists.size()][];
+		i = 0;
+		for (Employee e : lists) {
+			data[i] = e.toArray();
+			i++;
+		}
+		return data;
+	}
+
+	public void setTableE() {
+		panelEmployee.removeAll();
+		EmployeeDao dao = EmployeeDao.getInstance();
+
+		model = new DefaultTableModel(getdateE(Edao.selectEmployeeByAll()), MainFrame.EMPLOYEE_NAMES);
+		table = new JTable(model);
+		panelEmployee.add(table);
+		panelEmployee.revalidate();
+	}
+
+	public void setTableE(Object[] e) {
+		panelEmployee.removeAll();
+
+		Object[][] data = new Object[1][];
+		data[0] = e;
+
+		model = new DefaultTableModel(data, MainFrame.EMPLOYEE_NAMES);
+		table = new JTable(model);
+		panelEmployee.add(table);
+		panelEmployee.revalidate();
 	}
 
 }
